@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: flag_teacher_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: martPas
+      MYSQL_DATABASE: flags_app
+      MYSQL_USER: flags_user
+      MYSQL_PASSWORD: pasFlag4q
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+
+  bot:
+    build: .
+    container_name: flag_teacher_bot
+    restart: always
+    environment:
+      DB_HOST: mysql
+      DB_USER: flags_user
+      DB_PASSWORD: pasFlag4q
+      DB_NAME: flags_app
+      TELEGRAM_TOKEN: 8494472897:AAEtV3fKaOHZ_bTDvFE7Gyr7FbtlSvR-9Dw
+    depends_on:
+      - mysql
+
+volumes:
+  db_data:

@@ -16,7 +16,7 @@ export class Database {
                 database: process.env.DB_NAME,
                 logging: false, // можно включить для отладки
             });
-            console.log('🗄️ Sequelize подключен к MySQL');
+            console.log('Sequelize подключен к MySQL');
         }
 
         return Database.instance;
